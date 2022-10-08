@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css'
+/* import './App.css' */
 import MapPage from './Map';
 import SignInPage from './Signin';
 import SignUpPage from './Signup';
@@ -8,8 +7,6 @@ import { UserDataProvider } from "./userContext";
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <BrowserRouter>
       <UserDataProvider>

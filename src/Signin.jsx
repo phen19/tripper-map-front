@@ -4,10 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "./schemas/index";
-import {
-  useUserData,
-  saveUserDataInLocalStorage,
-} from "./userContext";
+import { useUserData, saveUserDataInLocalStorage } from "./userContext";
 /* import API from "./shared/constants"; */
 
 function SignInPage() {
@@ -23,7 +20,7 @@ function SignInPage() {
       url: `http://localhost:5000/signin`,
       data: values,
     })
-      .then((response) => {;
+      .then((response) => {
         setUserData(response.data);
         saveUserDataInLocalStorage(response.data);
         navigate("/map");
@@ -60,51 +57,45 @@ function SignInPage() {
 
   return (
     <Container enable={enable}>
-      <div className="split">
-        <div className="logo">
-            <h1>tripper map</h1>
-            <h3>have trip</h3>
-            <h3>have a scratch</h3>
-        </div>
+      <div className="logo">
+        <h1>Tripper Map</h1>
+        <h3>Brazil</h3>
+      </div>
+      <div className="form">
+        <form onSubmit={handleSubmit} autoComplete="off">
+          {/* <label htmlFor="email">Email</label> */}
+          <input
+            value={values.email}
+            onChange={handleChange}
+            id="email"
+            type="email"
+            placeholder="e-mail"
+            onBlur={handleBlur}
+            className={errors.email && touched.email ? "input-error" : ""}
+          />
+          {errors.email && touched.email && (
+            <p className="error">{errors.email}</p>
+          )}
 
-        <div className="form">
-          <form onSubmit={handleSubmit} autoComplete="off">
-            {/* <label htmlFor="email">Email</label> */}
-            <input
-              value={values.email}
-              onChange={handleChange}
-              id="email"
-              type="email"
-              placeholder="e-mail"
-              onBlur={handleBlur}
-              className={errors.email && touched.email ? "input-error" : ""}
-            />
-            {errors.email && touched.email && (
-              <p className="error">{errors.email}</p>
-            )}
+          {/* <label htmlFor="password">Password</label> */}
+          <input
+            id="password"
+            type="password"
+            placeholder="password"
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.password && touched.password ? "input-error" : ""}
+          />
+          {errors.password && touched.password && (
+            <p className="error">{errors.password}</p>
+          )}
 
-            {/* <label htmlFor="password">Password</label> */}
-            <input
-              id="password"
-              type="password"
-              placeholder="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={
-                errors.password && touched.password ? "input-error" : ""
-              }
-            />
-            {errors.password && touched.password && (
-              <p className="error">{errors.password}</p>
-            )}
-
-            <button type="submit">Log In</button>
-            <Link to="/signup">
-              <h6>First time? Create an account!</h6>
-            </Link>
-          </form>
-        </div>
+          <button type="submit">Log In</button>
+          <Link to="/signup">
+            <h6>First time? Create an account!</h6>
+          </Link>
+        </form>
       </div>
     </Container>
   );
@@ -115,36 +106,33 @@ export default SignInPage;
 // Style
 
 const Container = styled.div`
+  background-color: #e7dbc3;
+  width: 100vw;
+  height: 100vh;
+
   .split {
     display: flex;
     flex-direction: row;
   }
 
   .form {
-    padding-top: 300px;
-    background-color: #333333;
-    width: 40vw;
     display: flex;
     flex-direction: column;
+    margin-top: 100px;
   }
 
   .logo {
-    color: #ffffff;
-    background-color: #151515;
-    width: 60vw;
-    height: 100vh;
-    padding-top: 300px;
+    text-align: center;
+    padding-top: 100px;
 
     h1 {
-      padding: 0 0 0 10vw;
-      font-size: 106px;
+      font-size: 50px;
       font-weight: 700;
       font-family: "Passion One";
     }
 
     h3 {
       font-size: 43px;
-      padding: 0em 0px 0em 10vw;
       font-family: "Oswald";
     }
   }
@@ -174,7 +162,7 @@ const Container = styled.div`
 
   input,
   select {
-    width: 85%;
+    width: 25%;
     padding: 0.65rem 0.5rem;
     margin-bottom: 13px;
     font-size: 27px;
@@ -204,7 +192,7 @@ const Container = styled.div`
     margin-top: 12px;
     border: none;
     border-radius: 6px;
-    width: 85%;
+    width: 25%;
     font-size: 27px;
     font-weight: bold;
     cursor: pointer;
