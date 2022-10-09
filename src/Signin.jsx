@@ -5,27 +5,31 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "./schemas/index";
 import { useUserData, saveUserDataInLocalStorage } from "./userContext";
-/* import API from "./shared/constants"; */
+import API from "./constant";
+import { ThreeDots } from "react-loader-spinner";
 
 function SignInPage() {
   const [enable, setEnable] = useState(true);
   const [, setUserData] = useUserData();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (values, actions) => {
     setEnable(false);
-
+    setLoading(true);
     axios({
       method: "POST",
-      url: `http://localhost:5000/signin`,
+      url: `${API}/signin`,
       data: values,
     })
       .then((response) => {
         setUserData(response.data);
         saveUserDataInLocalStorage(response.data);
+        setLoading(false);
         navigate("/map");
       })
       .catch((error) => {
+        setLoading(false);
         if (error.code === "ERR_BAD_REQUEST") {
           alert("Email ou senha inválidos!");
         } else {
@@ -91,7 +95,13 @@ function SignInPage() {
             <p className="error">{errors.password}</p>
           )}
 
-          <button type="submit">Log In</button>
+          <button type="submit">
+            {loading ? (
+              <ThreeDots height={36} width={36} color={"#ffffff"}></ThreeDots>
+            ) : (
+              "Sign In"
+            )}
+          </button>
           <Link to="/signup">
             <h6>First time? Create an account!</h6>
           </Link>
@@ -202,6 +212,8 @@ const Container = styled.div`
     font-family: "Josefin Sans", sans-serif;
     opacity: ${(props) => (props.enable ? "1" : "0.7")};
     pointer-events: ${(props) => (props.enable ? "auto" : "none")};
+    display: flex;
+    justify-content: center;
   }
 
   input.input-error,

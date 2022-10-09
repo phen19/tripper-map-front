@@ -1,18 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import { useUserData } from "./userContext";
-/* import "./App.css"; */
 import axios from "axios";
 import styled from "styled-components";
 import Modal from "react-modal";
-import { IoMdEgg } from "react-icons/io";
 import { FaCircle } from "react-icons/fa";
 import { IconContext } from "react-icons";
+import API from "./constant";
+import { Oval } from "react-loader-spinner";
 
 function MapPage() {
   const [states, setStates] = useState([]);
   const [refreshAxios, setRefreshAxios] = useState(false);
-  const [selection, setSelection] = useState([]);
   const [userData] = useUserData();
+  const [loading, setLoading] = useState(false);
   const config = {
     headers: {
       Authorization: `Bearer ${userData}`,
@@ -20,16 +20,15 @@ function MapPage() {
   };
 
   function getMap() {
-    const request = axios.get(`http://localhost:5000/map`, config);
-    // setLoading(true);
+    const request = axios.get(`${API}/map`, config);
+    setLoading(true);
     request
       .then((response) => {
         setStates(response.data);
-        //  setLoading(false);
+        setLoading(false);
       })
       .catch((err) => {
-        /*                     setConnectError(err);
-                        setLoading(false); */
+        setLoading(false);
         console.error(err);
       });
   }
@@ -43,7 +42,7 @@ function MapPage() {
     function updateStatus(event, id, status) {
       event.preventDefault();
       const request = axios.patch(
-        `http://localhost:5000/map`,
+        `${API}/map`,
         [{ uf: id, status: status }],
         config
       );
@@ -173,112 +172,142 @@ function MapPage() {
   useEffect(() => {
     getMap();
   }, [refreshAxios]);
-  return (
-    <>
-      <Container>
-        <div className="legend">
-          <div className="sub-item">
-            <IconContext.Provider
-              value={{
-                style: {
-                  color: "#286240",
-                  fontSize: "20px",
-                  marginRight: "10px",
-                },
-              }}
-            >
-              <FaCircle></FaCircle> Visitado
-            </IconContext.Provider>
-          </div>
-          <div className="sub-item">
-            <IconContext.Provider
-              value={{
-                style: {
-                  color: "#6c8e9f",
-                  fontSize: "20px",
-                  marginRight: "10px",
-                },
-              }}
-            >
-              <FaCircle></FaCircle> Lista de Desejos
-            </IconContext.Provider>
-          </div>
-          <div className="sub-item">
-            <IconContext.Provider
-              value={{
-                style: {
-                  color: "#605e5a",
-                  fontSize: "20px",
-                  marginRight: "10px",
-                },
-              }}
-            >
-              <FaCircle></FaCircle> Sem Marcação
-            </IconContext.Provider>
-          </div>
-        </div>
-        <BrazilMap
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 613 639"
-          aria-label="Map of Brazil"
+
+  if (loading === true) {
+    return (
+      <>
+        <Container
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          {states.map((state, index) => (
-            <State
-              key={index}
-              id={state.uf}
-              name={state.name}
-              path={state.path}
-              status={state.status}
+          <div>
+            <Oval
+              height={36}
+              width={36}
+              color="#286240"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#6c8e9f"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
             />
-          ))}
-        </BrazilMap>
-        <div className="legend-mobile">
-          <div className="sub-item">
-            <IconContext.Provider
-              value={{
-                style: {
-                  color: "#286240",
-                  fontSize: "20px",
-                  marginRight: "10px",
-                  marginLeft: "10px",
-                },
-              }}
-            >
-              <FaCircle></FaCircle> Visitado
-            </IconContext.Provider>
           </div>
-          <div className="sub-item">
-            <IconContext.Provider
-              value={{
-                style: {
-                  color: "#6c8e9f",
-                  fontSize: "20px",
-                  marginRight: "10px",
-                  marginLeft: "10px",
-                },
-              }}
-            >
-              <FaCircle></FaCircle> Lista de Desejos
-            </IconContext.Provider>
+        </Container>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Container>
+          <div className="legend">
+            <div className="sub-item">
+              <IconContext.Provider
+                value={{
+                  style: {
+                    color: "#286240",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                  },
+                }}
+              >
+                <FaCircle></FaCircle> Visitado
+              </IconContext.Provider>
+            </div>
+            <div className="sub-item">
+              <IconContext.Provider
+                value={{
+                  style: {
+                    color: "#6c8e9f",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                  },
+                }}
+              >
+                <FaCircle></FaCircle> Lista de Desejos
+              </IconContext.Provider>
+            </div>
+            <div className="sub-item">
+              <IconContext.Provider
+                value={{
+                  style: {
+                    color: "#605e5a",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                  },
+                }}
+              >
+                <FaCircle></FaCircle> Sem Marcação
+              </IconContext.Provider>
+            </div>
           </div>
-          <div className="sub-item">
-            <IconContext.Provider
-              value={{
-                style: {
-                  color: "#605e5a",
-                  fontSize: "20px",
-                  marginRight: "10px",
-                  marginLeft: "10px",
-                },
-              }}
-            >
-              <FaCircle></FaCircle> Sem Marcação
-            </IconContext.Provider>
+          <BrazilMap
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 613 639"
+            aria-label="Map of Brazil"
+          >
+            {states.map((state, index) => (
+              <State
+                key={index}
+                id={state.uf}
+                name={state.name}
+                path={state.path}
+                status={state.status}
+              />
+            ))}
+          </BrazilMap>
+          <div className="legend-mobile">
+            <div className="sub-item">
+              <IconContext.Provider
+                value={{
+                  style: {
+                    color: "#286240",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: "10px",
+                  },
+                }}
+              >
+                <FaCircle></FaCircle> Visitado
+              </IconContext.Provider>
+            </div>
+            <div className="sub-item">
+              <IconContext.Provider
+                value={{
+                  style: {
+                    color: "#6c8e9f",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: "10px",
+                  },
+                }}
+              >
+                <FaCircle></FaCircle> Lista de Desejos
+              </IconContext.Provider>
+            </div>
+            <div className="sub-item">
+              <IconContext.Provider
+                value={{
+                  style: {
+                    color: "#605e5a",
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: "10px",
+                  },
+                }}
+              >
+                <FaCircle></FaCircle> Sem Marcação
+              </IconContext.Provider>
+            </div>
           </div>
-        </div>
-      </Container>
-    </>
-  );
+        </Container>
+      </>
+    );
+  }
 }
 
 export default MapPage;

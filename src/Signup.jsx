@@ -4,24 +4,28 @@ import { basicSchema } from "./schemas/index";
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-/* import API from "./shared/constants.jsx"; */
+import API from "./constant";
+import { ThreeDots } from "react-loader-spinner";
 
 function SignUpPage() {
   const [enable, setEnable] = useState(true);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (values, actions) => {
     setEnable(false);
 
     axios({
       method: "POST",
-      url: `http://localhost:5000/signup`,
+      url: `${API}/signup`,
       data: values,
     })
       .then((response) => {
+        setLoading(false);
         navigate("/");
       })
       .catch((error) => {
+        setLoading(false);
         if (error.code === "ERR_BAD_REQUEST") {
           alert("Email já cadastrado!");
         } else {
@@ -103,7 +107,13 @@ function SignUpPage() {
             <p className="error">{errors.confirmPassword}</p>
           )}
 
-          <button type="submit">Sign Up</button>
+          <button type="submit">
+            {loading ? (
+              <ThreeDots height={36} width={36} color={"#ffffff"}></ThreeDots>
+            ) : (
+              "Sign Up"
+            )}
+          </button>
           <Link to="/">
             <h6>Switch back to log in</h6>
           </Link>
@@ -215,6 +225,8 @@ const Container = styled.div`
     font-family: "Josefin Sans", sans-serif;
     opacity: ${(props) => (props.enable ? "1" : "0.7")};
     pointer-events: ${(props) => (props.enable ? "auto" : "none")};
+    display: flex;
+    justify-content: center;
   }
 
   input.input-error,
