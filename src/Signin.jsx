@@ -227,28 +227,26 @@ const Container = styled.div`
     }
 
     .form {
-      padding-top: 40px;
       width: 100%;
       height: 100vh;
     }
 
     .logo {
-      width: 100%;
-      height: 175px;
       text-align: center;
-      padding-top: 10px;
+      padding-top: 100px;
 
       h1 {
-        padding: 0 0 0 0vw;
-        font-size: 76px;
+        font-size: 50px;
         font-weight: 700;
-        line-height: 83px;
+        font-family: "Josefin Sans", sans-serif;
+        color: #605e5a;
       }
 
       h3 {
-        font-size: 23px;
-        line-height: 34px;
-        padding: 0em 0px 0em 0vw;
+        font-size: 50px;
+        font-weight: 700;
+        font-family: "Josefin Sans", sans-serif;
+        color: #286240;
       }
     }
 

@@ -64,7 +64,7 @@ function MapPage() {
           <>
             <button
               type="submit"
-              className="delete"
+              className="mark"
               onClick={() => {
                 updateStatus(event, id, "gone");
               }}
@@ -74,7 +74,7 @@ function MapPage() {
             </button>
             <button
               type="submit"
-              className="delete"
+              className="mark"
               onClick={() => {
                 updateStatus(event, id, "wishlist");
               }}
@@ -90,7 +90,7 @@ function MapPage() {
           <>
             <button
               type="submit"
-              className="delete"
+              className="mark"
               onClick={() => {
                 updateStatus(event, id, "available");
               }}
@@ -100,7 +100,7 @@ function MapPage() {
             </button>
             <button
               type="submit"
-              className="delete"
+              className="mark"
               onClick={() => {
                 updateStatus(event, id, "wishlist");
               }}
@@ -116,7 +116,7 @@ function MapPage() {
           <>
             <button
               type="submit"
-              className="delete"
+              className="mark"
               onClick={() => {
                 updateStatus(event, id, "available");
               }}
@@ -126,7 +126,7 @@ function MapPage() {
             </button>
             <button
               type="submit"
-              className="delete"
+              className="mark"
               onClick={() => {
                 updateStatus(event, id, "gone");
               }}
@@ -150,7 +150,7 @@ function MapPage() {
         <Modal
           isOpen={modalOpen}
           onRequestClose={showModal}
-          contentLabel="Delete Modal"
+          contentLabel="Options Modal"
           style={modalStyle}
           ariaHideApp={false}
         >
@@ -322,7 +322,7 @@ const ContainerModal = styled.div`
     color: #6c8e9f;
   }
 
-  .delete {
+  .mark {
     background-color: #6c8e9f;
     color: #ffffff;
   }
@@ -369,7 +369,7 @@ const ContainerModal = styled.div`
       color: #6c8e9f;
     }
 
-    .delete {
+    .mark {
       background-color: #6c8e9f;
       color: #ffffff;
     }
@@ -457,5 +457,21 @@ const Container = styled.div`
       display: flex;
       justify-content: center;
     }
+  }
+`;
+
+const Logo = styled.div`
+  text-align: center;
+  background-color: #e7dbc3;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    font-family: "Josefin Sans", sans-serif;
+    color: #605e5a;
   }
 `;
