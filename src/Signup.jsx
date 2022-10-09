@@ -52,8 +52,8 @@ function SignUpPage() {
   return (
     <Container enable={enable}>
       <div className="logo">
-        <h1>Tripper Map</h1>
-        <h3>Brazil</h3>
+        <h1>TRIPPER MAP </h1>
+        <h3>BRAZIL 🌎</h3>
       </div>
 
       <div className="form">
@@ -140,19 +140,22 @@ const Container = styled.div`
     h1 {
       font-size: 50px;
       font-weight: 700;
-      font-family: "Passion One";
+      font-family: "Josefin Sans", sans-serif;
+      color: #605e5a;
     }
 
     h3 {
-      font-size: 43px;
-      font-family: "Oswald";
+      font-size: 50px;
+      font-weight: 700;
+      font-family: "Josefin Sans", sans-serif;
+      color: #286240;
     }
   }
 
   .error {
     color: #fc8181;
     font-size: 0.75rem;
-    //text-align: left;
+    text-align: left;
     margin-top: 0.2rem;
     margin-bottom: 0.6rem;
   }
@@ -166,15 +169,15 @@ const Container = styled.div`
     h6 {
       margin-top: 22px;
       text-decoration: underline;
-      color: #ffffff;
-      font-family: "Lato";
+      color: #605e5a;
+      font-family: "Josefin Sans", sans-serif;
       font-size: 20px;
     }
   }
 
   input,
   select {
-    width: 25%;
+    width: 350px;
     padding: 0.65rem 0.5rem;
     margin-bottom: 13px;
     font-size: 27px;
@@ -183,7 +186,7 @@ const Container = styled.div`
     background-color: #ffffff;
     border-radius: 6px;
     outline: none;
-    font-family: "Oswald";
+    font-family: "Josefin Sans", sans-serif;
   }
 
   input:focus,
@@ -199,24 +202,24 @@ const Container = styled.div`
   button {
     display: block;
     padding: 0.6rem 0.5rem;
-    background-color: #1877f2;
+    background-color: #6c8e9f;
     color: #ffffff;
     margin-top: 12px;
     border: none;
     border-radius: 6px;
-    width: 25%;
+    width: 300px;
     font-size: 27px;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: "Oswald";
+    font-family: "Josefin Sans", sans-serif;
     opacity: ${(props) => (props.enable ? "1" : "0.7")};
     pointer-events: ${(props) => (props.enable ? "auto" : "none")};
   }
 
   input.input-error,
   select.input-error {
-    margin: 15px 0 5px 0;
+    margin: 15px 0 15px 0;
     border-color: #fc8181;
     background-color: #49312b;
   }

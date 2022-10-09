@@ -4,6 +4,9 @@ import { useUserData } from "./userContext";
 import axios from "axios";
 import styled from "styled-components";
 import Modal from "react-modal";
+import { IoMdEgg } from "react-icons/io";
+import { FaCircle } from "react-icons/fa";
+import { IconContext } from "react-icons";
 
 function MapPage() {
   const [states, setStates] = useState([]);
@@ -173,6 +176,47 @@ function MapPage() {
   return (
     <>
       <Container>
+        <div className="legend">
+          <div className="sub-item">
+            <IconContext.Provider
+              value={{
+                style: {
+                  color: "#286240",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                },
+              }}
+            >
+              <FaCircle></FaCircle> Visitado
+            </IconContext.Provider>
+          </div>
+          <div className="sub-item">
+            <IconContext.Provider
+              value={{
+                style: {
+                  color: "#6c8e9f",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                },
+              }}
+            >
+              <FaCircle></FaCircle> Lista de Desejos
+            </IconContext.Provider>
+          </div>
+          <div className="sub-item">
+            <IconContext.Provider
+              value={{
+                style: {
+                  color: "#605e5a",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                },
+              }}
+            >
+              <FaCircle></FaCircle> Sem Marcação
+            </IconContext.Provider>
+          </div>
+        </div>
         <BrazilMap
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 613 639"
@@ -188,6 +232,50 @@ function MapPage() {
             />
           ))}
         </BrazilMap>
+        <div className="legend-mobile">
+          <div className="sub-item">
+            <IconContext.Provider
+              value={{
+                style: {
+                  color: "#286240",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                  marginLeft: "10px",
+                },
+              }}
+            >
+              <FaCircle></FaCircle> Visitado
+            </IconContext.Provider>
+          </div>
+          <div className="sub-item">
+            <IconContext.Provider
+              value={{
+                style: {
+                  color: "#6c8e9f",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                  marginLeft: "10px",
+                },
+              }}
+            >
+              <FaCircle></FaCircle> Lista de Desejos
+            </IconContext.Provider>
+          </div>
+          <div className="sub-item">
+            <IconContext.Provider
+              value={{
+                style: {
+                  color: "#605e5a",
+                  fontSize: "20px",
+                  marginRight: "10px",
+                  marginLeft: "10px",
+                },
+              }}
+            >
+              <FaCircle></FaCircle> Sem Marcação
+            </IconContext.Provider>
+          </div>
+        </div>
       </Container>
     </>
   );
@@ -207,15 +295,16 @@ const ContainerModal = styled.div`
     width: 350px;
     height: 82px;
     font-size: 34px;
-    font-family: "Lato", sans-serif;
+    font-family: "Josefin Sans", sans-serif;
     font-weight: 700;
     color: #ffffff;
     text-align: center;
   }
 
   .modalButtons {
-    width: 338px;
+    width: 500px;
     display: flex;
+    justify-content: space-between;
   }
 
   .modalButtons > button {
@@ -230,11 +319,11 @@ const ContainerModal = styled.div`
 
   .back {
     background-color: #ffffff;
-    color: #1877f2;
+    color: #6c8e9f;
   }
 
   .delete {
-    background-color: #1877f2;
+    background-color: #6c8e9f;
     color: #ffffff;
   }
 
@@ -249,7 +338,7 @@ const ContainerModal = styled.div`
 
     h4 {
       width: 50vw;
-      height: 82px;
+      height: 40px;
       font-size: 24px;
       font-family: "Lato", sans-serif;
       font-weight: 700;
@@ -260,7 +349,10 @@ const ContainerModal = styled.div`
     .modalButtons {
       width: 50vw;
       display: flex;
-      justify-content: space-evenly;
+      flex-direction: column-reverse;
+      height: 200px;
+      align-items: center;
+      justify-content: space-around;
     }
 
     .modalButtons > button {
@@ -274,11 +366,11 @@ const ContainerModal = styled.div`
 
     .back {
       background-color: #ffffff;
-      color: #1877f2;
+      color: #6c8e9f;
     }
 
     .delete {
-      background-color: #1877f2;
+      background-color: #6c8e9f;
       color: #ffffff;
     }
   }
@@ -294,7 +386,7 @@ const modalStyle = {
     transform: "translate(-50%, -50%)",
     height: "fit-content",
     width: "fit-content",
-    backgroundColor: "#333333",
+    backgroundColor: "#605e5a",
     borderRadius: "50px",
     border: "0",
   },
@@ -336,4 +428,34 @@ const Container = styled.div`
   background-color: #e7dbc3;
   display: flex;
   justify-content: center;
+
+  .legend {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .legend-mobile {
+    display: none;
+  }
+
+  .sub-item {
+    display: flex;
+    margin-bottom: 10px;
+    font-family: "Josefin Sans", sans-serif;
+    align-items: center;
+  }
+
+  @media (max-width: 935px) {
+    flex-direction: column;
+
+    .legend {
+      display: none;
+    }
+
+    .legend-mobile {
+      display: flex;
+      justify-content: center;
+    }
+  }
 `;
